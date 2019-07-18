@@ -17,10 +17,13 @@ services:
     ports:
     - '3306:3306'
     volumes:
-    - './docker/mysql_data:/var/lib/mysql'
+    - 'mysql:/var/lib/mysql'
     environment:
       MYSQL_DATABASE: 'laravel'
+      MYSQL_ROOT_PASSWORD: 'secret'
   composer:
     build: './docker/composer'
     volumes:
     - '.:/data'
+volumes:
+  mysql:
