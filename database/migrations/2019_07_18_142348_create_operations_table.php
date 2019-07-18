@@ -15,8 +15,8 @@ class CreateOperationsTable extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('storage_id');
-            $table->unsignedInteger('product_id');
+            $table->unsignedBigInteger('storage_id');
+            $table->unsignedBigInteger('product_id');
             $table->integer('amount');
             $table->timestamps();
         });
