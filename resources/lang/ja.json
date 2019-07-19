@@ -6,5 +6,7 @@
     "Password": "パスワード",
     "Remember Me": "パスワードを記憶する",
 
-    "Invalid rounding function has been specified.": "不正な端数処理関数が指定されました。"
+    "Invalid rounding function has been specified.": "不正な端数処理関数が指定されました。",
+
+    "Storages": "倉庫リスト"
 }
