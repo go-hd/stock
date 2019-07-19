@@ -81,7 +81,7 @@ class Product extends Model
         $rounding = config('stock.tax.rounding');
 
         if (in_array($rounding, ['round', 'floor', 'ceil'])) {
-            throw new \Exception(__('exception.invalid_rounding_function'));
+            throw new \Exception(__('Invalid rounding function has been specified.'));
         }
 
         return $rounding($this->price * (1 + config('stock.tax', 0.08)));
