@@ -3,6 +3,7 @@
 use App\Operation;
 use App\Product;
 use App\Storage;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        factory(User::class)->create([
+            'name' => 'Test User',
+            'email' => 'test@email.address',
+        ]);
+
         $products = factory(Product::class, 30)->create();
         $storages = factory(Storage::class, 5)->create();
 
