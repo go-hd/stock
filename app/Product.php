@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Product
@@ -29,6 +30,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereSku($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $price
+ * @property-read mixed $tax_included_price
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Product wherePrice($value)
  */
 class Product extends Model
 {
@@ -43,6 +47,7 @@ class Product extends Model
         'asin',
         'name',
         'code',
+        'price',
     ];
 
     /**
@@ -50,7 +55,7 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function operations()
+    public function operations(): HasMany
     {
         return $this->hasMany(Operation::class);
     }
@@ -60,8 +65,25 @@ class Product extends Model
      *
      * @return int
      */
-    public function getStocksAttribute()
+    public function getStocksAttribute(): int
     {
         return Operation::whereProductId($this->id)->sum('amount');
+    }
+
+    /**
+     * Get the tax-included price of the product.
+     *
+     * @return int
+     * @throws \Exception
+     */
+    public function getTaxIncludedPriceAttribute(): int
+    {
+        $rounding = config('stock.tax.rounding');
+
+        if (in_array($rounding, ['round', 'floor', 'ceil'])) {
+            throw new \Exception(__('exception.invalid_rounding_function'));
+        }
+
+        return $rounding($this->price * (1 + config('stock.tax', 0.08)));
     }
 }
