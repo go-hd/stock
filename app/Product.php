@@ -51,6 +51,15 @@ class Product extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'tax_included_price',
+    ];
+
+    /**
      * Get the operations for the product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -80,8 +89,8 @@ class Product extends Model
     {
         $rounding = config('stock.tax.rounding');
 
-        if (in_array($rounding, ['round', 'floor', 'ceil'])) {
-            throw new \Exception(__('Invalid rounding function has been specified.'));
+        if (!in_array($rounding, ['round', 'floor', 'ceil'])) {
+            throw new \Exception('Invalid rounding function has been specified.');
         }
 
         return $rounding($this->price * (1 + config('stock.tax.rate', 0.08)));
