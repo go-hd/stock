@@ -21,15 +21,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@email.address',
         ]);
 
-        $products = factory(Product::class, 30)->create();
-        $storages = factory(Storage::class, 5)->create();
+        $products = factory(Product::class, 10)->create();
+        $storages = factory(Storage::class, 4)->create();
 
         $operations = collect([]);
 
         foreach ($products as $product) {
             foreach ($storages as $storage) {
                 $operations = $operations->merge(
-                    factory(Operation::class, random_int(20, 50))->make([
+                    factory(Operation::class, random_int(0, 10))->make([
                         'product_id' => $product->id,
                         'storage_id' => $storage->id,
                     ])
