@@ -14,32 +14,27 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <div class="sidebar bg-dark text-light">
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </nav>
-            <div class="border-secondary border-bottom container-fluid py-2">
+<div id="app">
+    <sidebar :storages="{{ \App\Storage::all()->toJson() }}">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark container-fluid">
+            <a class="navbar-brand" href="{{ route('home') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+        </nav>
+        <div class="border-secondary border-bottom container-fluid py-2">
+            <div>
                 <a class="text-light" href="{{ route('home') }}">{{ __('Home') }}</a>
             </div>
-            <div class="list-unstyled border-secondary border-bottom container-fluid py-3">
-                <div class="text-secondary">{{ __('Storages') }}</div>
-                @foreach(\App\Storage::all() as $storage)
-                    <div class="py-1">{{ $storage->name }}</div>
-                @endforeach
-            </div>
         </div>
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    </sidebar>
+    <main class="py-4">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>
