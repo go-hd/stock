@@ -28,4 +28,42 @@ class Storage extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['products'];
+
+    /**
+     * Get the operations in the storage.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operations()
+    {
+        return $this->hasMany(Operation::class);
+    }
+
+    /**
+     * Get the products in the storage.
+     *
+     * @return array
+     */
+    public function getProductsAttribute()
+    {
+        return $this->operations()
+            ->selectRaw("product_id, SUM(amount) as amount")
+            ->groupBy('product_id')
+            ->get()
+            ->map(function ($operatedProduct) {
+                $id = $operatedProduct['product_id'];
+
+                $product = Product::find($id)->toArray();
+                $product['amount'] = $operatedProduct['amount'];
+
+                return $product;
+            })->toArray();
+    }
 }
