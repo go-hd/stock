@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $storage_id
  * @property int $product_id
- * @property int $amount
+ * @property int $quantity
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Product $product
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation wherequantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Operation whereProductId($value)
@@ -36,7 +36,7 @@ class Operation extends Model
     protected $fillable = [
         'storage_id',
         'product_id',
-        'amount',
+        'quantity',
     ];
 
     /**

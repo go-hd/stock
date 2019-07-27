@@ -17,7 +17,7 @@ class CreateOperationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('storage_id');
             $table->unsignedBigInteger('product_id');
-            $table->integer('amount');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }

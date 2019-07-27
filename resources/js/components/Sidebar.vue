@@ -5,14 +5,14 @@
             <div class="list border-secondary border-bottom container-fluid py-2">
                 <div class="title pt-2">{{ __('Storages') }}</div>
                 <div v-for="storage in storages" class="item py-1 my-1">
-                    {{ storage.name }}
+                    <a class="text-light" :href="storage.url">{{ storage.name }}</a>
                     <ul class="list-unstyled mt-2">
                         <li class="product d-flex align-items-center justify-content-right" v-for="product in storage.products">
-                            <div class="name"><span class="pr-2">-</span>{{ product.name }}</div>
+                            <div class="name"><span class="pr-2">-</span>{{ product.code }}</div>
                             <div
                                 class="badge"
                                 :class="['badge-' + productStatus(product)]"
-                            >{{ product.amount }}</div>
+                            >{{ product.stocks }}</div>
                         </li>
                     </ul>
                 </div>
@@ -36,9 +36,9 @@ export default {
 
     methods: {
         productStatus(product) {
-            return product.amount > 500 ? 'success' :
-                product.amount > 100 ? 'light' :
-                product.amount > 10 ? 'warning' :
+            return product.stocks > 500 ? 'success' :
+                product.stocks > 100 ? 'light' :
+                product.stocks > 10 ? 'warning' :
                 'danger'
         },
         __

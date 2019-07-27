@@ -10,7 +10,7 @@ $factory->define(Operation::class, function (Faker $faker) {
     $updated_at = $faker->dateTimeBetween($created_at);
 
     return [
-        'amount' => $faker->numberBetween(0, 300) - 100,
+        'quantity' => $faker->numberBetween(0, 300) - 100,
         'created_at' => $created_at,
         'updated_at' => $updated_at,
     ];

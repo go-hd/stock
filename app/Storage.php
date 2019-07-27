@@ -34,7 +34,7 @@ class Storage extends Model
      *
      * @var array
      */
-    protected $appends = ['products'];
+    protected $appends = ['products', 'url'];
 
     /**
      * Get the operations in the storage.
@@ -54,16 +54,26 @@ class Storage extends Model
     public function getProductsAttribute()
     {
         return $this->operations()
-            ->selectRaw("product_id, SUM(amount) as amount")
+            ->selectRaw(
+                "product_id, products.*, " .
+                "SUM(CASE WHEN quantity > 0 THEN quantity ELSE 0 END) AS receipts, ".
+                "SUM(CASE WHEN quantity < 0 THEN quantity ELSE 0 END)*-1 AS issues, " .
+                "SUM(quantity) AS stocks, " .
+                "products.cost*SUM(quantity) as stock_value"
+            )
+            ->join('products', 'operations.product_id', '=', 'products.id')
             ->groupBy('product_id')
-            ->get()
-            ->map(function ($operatedProduct) {
-                $id = $operatedProduct['product_id'];
+            ->orderBy('product_id')
+            ->get()->toArray();
+    }
 
-                $product = Product::find($id)->toArray();
-                $product['amount'] = $operatedProduct['amount'];
-
-                return $product;
-            })->toArray();
+    /**
+     * Get the url of the storage.
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        return route('storage.show', ['id' => $this->id]);
     }
 }

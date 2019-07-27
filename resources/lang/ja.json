@@ -5,5 +5,10 @@
     "E-Mail Address": "メールアドレス",
     "Password": "パスワード",
     "Remember Me": "パスワードを記憶する",
-    "Storages": "保管場所"
+    "Storages": "保管場所",
+    "Cost": "税込原価",
+    "Receipts": "入庫数",
+    "Issues": "出庫数",
+    "Stocks": "在庫数",
+    "Stock Value": "在庫価格"
 }

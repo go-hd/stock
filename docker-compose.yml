@@ -2,8 +2,9 @@ version: '3'
 services:
   web:
     build: './docker/web'
+    env_file: .env
     ports:
-    - '8000:80'
+    - '${PORT}:80'
     volumes:
     - '.:/var/www/html:cached'
     - './docker/web/php.ini:/usr/local/etc/php/php.ini'
@@ -20,5 +21,9 @@ services:
     build: './docker/composer'
     volumes:
     - '.:/data'
+  yarn:
+    build: './docker/yarn'
+    volumes:
+      - '.:/data'
 volumes:
   mysql:
